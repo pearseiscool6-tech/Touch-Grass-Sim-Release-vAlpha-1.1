@@ -52,7 +52,7 @@ body {
             }
     #achievement-popup {
     position: fixed;
-    top: 20px;
+    top: 80px;
     right: -300px; /* Start off-screen to the right */
     width: 250px;
     background-color: #2e7d32; /* Darker green for achievement */
@@ -88,6 +88,117 @@ body {
     align-items: flex-start; /* Aligns them to the top */
 }
 
+/* ================= NAV BAR SYSTEM ================= */
+#nav-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 30px;
+    box-sizing: border-box;
+    z-index: 2000; /* Stays fully on top of every other layer */
+    font-family: sans-serif;
+}
+
+#nav-title {
+    font-weight: bold;
+    font-size: 20px;
+    color: #2e7d32;
+    letter-spacing: 0.5px;
+}
+
+.nav-tabs {
+    display: flex;
+    gap: 12px;
+}
+
+.nav-tab {
+    background: none;
+    border: 2px solid transparent;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #666;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s ease-in-out;
+}
+
+.nav-tab:hover {
+    color: #4BAF30;
+    background-color: rgba(75, 175, 48, 0.08);
+}
+
+.nav-tab.active {
+    color: white;
+    background-color: #4BAF30;
+    border-color: #4BAF30;
+}
+
+/* Push game area lower to avoid clipping under the new nav bar */
+body {
+    padding-top: 90px; 
+}
+
+/* ================= TAB TOGGLE MECHANICS ================= */
+.tab-content {
+    display: none; /* Hide sections when inactive */
+}
+
+.tab-content.active {
+    display: block; /* Show section when active */
+}
+
+/* ================= UPGRADE TAB STYLES ================= */
+.upgrade-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 15px;
+    text-align: left;
+}
+
+.upgrade-item {
+    background: #f9f9f9;
+    padding: 12px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 4px solid #2196F3;
+}
+
+.upgrade-info h3 {
+    margin: 0 0 4px 0;
+    font-size: 15px;
+    color: #222;
+}
+
+.upgrade-info p {
+    margin: 0;
+    font-size: 12px;
+    color: #666;
+}
+
+.upgrade-item button {
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.upgrade-item button:hover {
+    background-color: #1976D2;
+}
 #shop-panel {
     width: 250px;
     background-color: rgba(255, 255, 255, 0.95);
