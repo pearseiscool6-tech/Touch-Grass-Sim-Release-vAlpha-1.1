@@ -1,0 +1,177 @@
+body { 
+    background: linear-gradient(to right, #4BAF30, #4FCEF2);
+    padding-top: 30px; 
+    padding-bottom: 130px;
+    margin: 0;
+}
+#grass-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px; 
+    background-image: url('banner.png');
+    background-size: cover;       
+    background-position: center; 
+    background-repeat: no-repeat;
+    border-top: 4px solid #2e7d32; 
+    z-index: 10;                  
+    pointer-events: none;
+}
+    .stuff {
+    position: fixed;
+    max-width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    width: 450px;
+    text-align: center;
+    font-family: sans-serif;
+}   
+    #counter {
+    font-size: 24px;
+    font-family: sans-serif;
+    margin-bottom: 20px;
+    color: #333;
+}
+    #buuton { 
+    transform: scale(1.2);
+    padding: 10px;
+    background-color: #2196F3;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 10px;
+            }
+    #achievement-popup {
+    position: fixed;
+    top: 20px;
+    right: -300px; /* Start off-screen to the right */
+    width: 250px;
+    background-color: #2e7d32; /* Darker green for achievement */
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transition: right 0.5s ease-in-out;
+    z-index: 1000; /* Ensures it stays on top of everything */
+    font-family: sans-serif;
+    border-left: 5px solid #4BAF30;
+}
+
+/* This class will be added/removed by JS to animate the popup */
+#achievement-popup.show {
+    right: 20px;
+}
+
+#achievement-title {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+#achievement-desc {
+    margin: 0;
+    font-size: 0.9em;
+}
+/* Container to hold both game and shop */
+.game-wrapper {
+    display: flex;
+    justify-content: center; /* Centers the whole group on the screen */
+    align-items: flex-start; /* Aligns them to the top */
+}
+
+#shop-panel {
+    width: 250px;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: sans-serif;
+}
+
+#auto-shop-panel {
+    width: 250px;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: sans-serif;
+}
+
+.shop-item {
+    margin: 15px 0;
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 10px;
+}
+
+.auto-shop-item {
+    margin: 15px 0;
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 10px;
+}
+
+.shop-item button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.auto-shop-item button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Ensure your wrapper is still centering things */
+.game-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+}
+.stuff img {
+    display: block;
+    margin: 0 auto 20px;
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    /* ADD THIS LINE: Smooths out the scaling */
+    transition: transform 0.1s ease-in-out; 
+}
+
+/* This class will be added briefly when you click */
+.grow {
+    transform: scale(1.2); /* Makes it 20% bigger */
+}
+#version-info {
+    position: fixed;
+    bottom: 10px; /* Distance from the bottom */
+    left: 15px;   /* Distance from the left */
+    font-family: sans-serif;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+    z-index: 1100; /* Higher than your banner (10) and popup (1000) */
+    pointer-events: none; /* Ensures it doesn't block any clicks */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Makes it readable over the banner */
+    font-weight: bold;
+}
