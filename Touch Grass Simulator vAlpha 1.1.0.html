@@ -8,6 +8,13 @@
     </head>
     <body>
         <body>
+            <nav id="nav-bar">
+    <div id="nav-title">🌱 Touch Grass Sim</div>
+    <div class="nav-tabs">
+        <button class="nav-tab active" onclick="switchTab('game')">Main Game</button>
+        <button class="nav-tab" onclick="switchTab('upgrades')">Upgrades</button>
+    </div>
+</nav>
     <div class="game-wrapper">
         <div id="auto-shop-panel">
             <h2>Auto Clicker:</h2>
@@ -28,15 +35,51 @@
         </div> 
         <div id="spacer1"><pre>                                                             </pre></div>
         <div class="stuff">
-            <h1 id="main-title">Touch Grass Simulator</h1>
-            <p id="counter">Grass Touched: 0</p>
-             <p id="total-grass">Total Grass Touched: 0</p>
+    <h1 id="main-title">Touch Grass Simulator</h1>
+    <p id="counter">Grass Touched: 0</p>
+    <p id="total-grass">Total Grass Touched: 0</p>
              <span id='per-second'>Per Second: 0 </span>
              <span id="separator"> |   </span>
              <span id='per-click'>Per Click: 0 </span>
-            <img id="grass-img"src="icon.png" alt="grass" width="100" height="100"> 
-            <button id="buuton" onclick="touch();">Touch Grass</button>
+    <div id="game-tab" class="tab-content active">
+        <img id="grass-img" src="icon.png" alt="grass" width="100" height="100"> 
+        <button id="buuton" onclick="touch();">Touch Grass</button>
+    </div>
+
+    <div id="upgrades-tab" class="tab-content">
+        <h2 style="font-size: 18px; margin-bottom: 5px; color: #333;">Research Laboratory</h2>
+        <div class="upgrade-list">
+            
+            <div class="upgrade-item">
+                <div class="upgrade-info">
+                    <h3 id="up-rabbit-name">Rabbit Upgrade (Lvl 0)</h3>
+                    <p>Rabbits produce 2x grass per second</p>
+                    <p><strong id="up-rabbit-cost">Cost: 150 Grass</strong></p>
+                </div>
+                <button onclick="buyUpgrade('rabbit', 150, 2)">Buy</button>
+            </div>
+            
+            <div class="upgrade-item">
+                <div class="upgrade-info">
+                    <h3 id="up-sheep-name">Sheep Upgrade (Lvl 0)</h3>
+                    <p>Sheep produce 2x grass per second</p>
+                    <p><strong id="up-sheep-cost">Cost: 500 Grass</strong></p>
+                </div>
+                <button onclick="buyUpgrade('sheep', 500, 2)">Buy</button>
+            </div>
+
+            <div class="upgrade-item">
+                <div class="upgrade-info">
+                    <h3 id="up-mower-name">Mower Upgrade (Lvl 0)</h3>
+                    <p>Diesel Mowers produce 2x grass per second</p>
+                    <p><strong id="up-mower-cost">Cost: 2000 Grass</strong></p>
+                </div>
+                <button onclick="buyUpgrade('mower', 2000, 2)">Buy</button>
+            </div>
+
         </div>
+    </div>
+</div>
         <div id="spacer2"><pre>                                                             </pre></div>
         <div id="shop-panel">
             <h2>Click Buffs:</h2>

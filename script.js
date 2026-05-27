@@ -1,6 +1,10 @@
-//add more logging features to make it easier to debug and to see how the player is progressing,
+//TODO: add more logging features to make it easier to debug and to see how the player is progressing,
 //variables
 // Use Number() to turn the stored string back into a real number
+// Track permanent efficiency multipliers (defaults to 1x if unpurchased)
+var rabbitMultiplier = Number(localStorage.getItem('rabbitMultiplier')) || 1;
+var sheepMultiplier = Number(localStorage.getItem('sheepMultiplier')) || 1;
+var mowerMultiplier = Number(localStorage.getItem('mowerMultiplier')) || 1;
 var rabbitCost = Number(localStorage.getItem('rabbitCost')) || 20;
 var sheepCost = Number(localStorage.getItem('sheepCost')) || 50;
 var petrolMowerCost = Number(localStorage.getItem('petrolMowerCost')) || 250;
@@ -18,8 +22,9 @@ var rabbits = Number(localStorage.getItem('rabbits')) || 0;
 var sheep = Number(localStorage.getItem('sheep')) || 0;
 var petrolMowers = Number(localStorage.getItem('petrolMowers')) || 0;
 const clickAudio = new Audio('click.mp3');
-// Calculate total passive income
-    var income = (rabbits * 1) + (sheep * 5) + (petrolMowers * 50);
+var income = (rabbits * 1 * rabbitMultiplier) + 
+                 (sheep * 5 * sheepMultiplier) + 
+                 (petrolMowers * 50 * mowerMultiplier);
 var totalGrassTouched = Number(localStorage.getItem('totalGrassTouched')) || 0;
 // Update the display immediately on 
 document.getElementById('rabbitTxt').innerText = "Cost: " + rabbitCost;
@@ -286,3 +291,80 @@ function showAchievement(title, desc) {
                 console.log(`${totalGrassTouched}`);
     }
 }, 1000);
+
+//navbar functionality
+// Handles view swapping cleanly 
+function switchTab(tabName) {
+    // Reset all tab indicators and views
+    document.querySelectorAll('.nav-tab').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(view => view.classList.remove('active'));
+    
+    // Assign active state to the clicked tab selection
+    if (tabName === 'game') {
+        document.querySelector('.nav-tab[onclick="switchTab(\'game\')"]').classList.add('active');
+        document.getElementById('game-tab').classList.add('active');
+    } else if (tabName === 'upgrades') {
+        document.querySelector('.nav-tab[onclick="switchTab(\'upgrades\')"]').classList.add('active');
+        document.getElementById('upgrades-tab').classList.add('active');
+    }
+}
+
+// Scalable Blueprint system for upgrades
+function buyUpgrade(type, baseCost, multiplierValue) {
+    // Track level per item type so cost scales up dynamically
+    var currentLevel = Number(localStorage.getItem('upLevel_' + type)) || 0;
+    var currentCost = baseCost * Math.pow(4, currentLevel); // Scales x4 each level
+    
+    if (grassTouched >= currentCost) {
+        grassTouched -= currentCost;
+        currentLevel++;
+        
+        // Mutate and store corresponding target multipliers
+        if (type === 'rabbit') {
+            rabbitMultiplier *= multiplierValue;
+            localStorage.setItem('rabbitMultiplier', rabbitMultiplier);
+        } else if (type === 'sheep') {
+            sheepMultiplier *= multiplierValue;
+            localStorage.setItem('sheepMultiplier', sheepMultiplier);
+        } else if (type === 'mower') {
+            mowerMultiplier *= multiplierValue;
+            localStorage.setItem('mowerMultiplier', mowerMultiplier);
+        }
+        
+        // Commit new totals to browser save structures
+        localStorage.setItem('upLevel_' + type, currentLevel);
+        localStorage.setItem("score", grassTouched);
+        
+        // Refresh display items immediately
+        document.getElementById('counter').innerText = "Grass Touched: " + grassTouched;
+        document.getElementById('per-second').innerText = "Per Second: " + income;
+        updateUpgradeUI(); 
+        
+        showAchievement("Research Success!", "Upgraded " + type + " speed by " + multiplierValue + "x!");
+        document.getElementById('per-second').innerText = "Per Second: " + income;
+    } else {
+        alert("Insufficient resources! Keep touching grass to fund operations.");
+    }
+}
+
+// Keeps costs and titles synchronized when purchasing or loading game state
+function updateUpgradeUI() {
+    var types = ['rabbit', 'sheep', 'mower'];
+    var baseCosts = { rabbit: 150, sheep: 500, mower: 2000 };
+    
+    types.forEach(type => {
+        var lvl = Number(localStorage.getItem('upLevel_' + type)) || 0;
+        var cost = baseCosts[type] * Math.pow(4, lvl);
+        
+        var costEl = document.getElementById('up-' + type + '-cost');
+        var nameEl = document.getElementById('up-' + type + '-name');
+        
+        if (costEl && nameEl) {
+            costEl.innerText = "Cost: " + cost + " Grass";
+            nameEl.innerText = type.charAt(0).toUpperCase() + type.slice(1) + " Upgrade (Lvl " + lvl + ")";
+        }
+    });
+}
+
+// Initialize interface states on first boot
+updateUpgradeUI();
