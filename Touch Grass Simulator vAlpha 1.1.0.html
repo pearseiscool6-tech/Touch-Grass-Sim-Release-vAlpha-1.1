@@ -20,15 +20,15 @@
             <h2>Auto Clicker:</h2>
             <div class="auto-shop-item">
                 <p><strong id="rabbit-title">Rabbit</strong></p>
-                <p>(+1 per second)</p>
+                <p id="rabbit-desc">(+1 per second)</p>
                 <p id="rabbitTxt">Cost: 20 Grass</p>
                 <button onclick="buyRabbit();">Buy</button>
                 <p><strong id="sheep-title">Sheep</strong></p>
-                <p>(+5 per second)</p>
+                <p id="sheep-desc">(+5 per second)</p>
                 <p id="sheepTxt">Cost: 50 Grass</p>
                 <button onclick="buySheep();">Buy</button>
                 <p><strong id="petrolMower-title">Petrol Mower</strong></p>
-                <p>(+50 per second)</p>
+                <p id="petrolMower-desc">(+50 per second)</p>
                 <p id="petrolMowerTxt">Cost: 250 Grass</p>
                 <button onclick="buyPetrolMower();">Buy</button>
             </div> 
@@ -101,8 +101,14 @@
     </div> 
             <div id="achievement-popup" class="popup-hidden">
     <div class="achievement-content">
-        <span id="achievement-title">Achievement Unlocked!</span>
-        <p id="achievement-desc">You touched grass for the first time.</p>
+        <span id="achievement-title">ACHIEVEMENT TITLE</span>
+    <p id="achievement-desc">ACHIEVEMENT DESCRIPTION</p>
+    </div>
+</div>
+<div id="error-popup" class="popup-hidden">
+    <div class="error-content">
+        <span id="error-title">ERROR TITLE</span>
+        <p id="error-desc">ERROR DESCRIPTION</p>
     </div>
 </div>
             <div id="grass-banner"></div>

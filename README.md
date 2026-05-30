@@ -2,4 +2,4 @@
 
 Touch Grass Simulator gives you a fully immersive experience to touching grass in the real world.
 
-It comes with achievements, upgrades and more not at all similar to Cookie Clicker.
+It comes with achievements, upgrades and more.

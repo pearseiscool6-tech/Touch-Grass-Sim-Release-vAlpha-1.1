@@ -35,22 +35,29 @@ var ach1Dec = localStorage.getItem('ach1Dec') === 'true';
 var rabbits = Number(localStorage.getItem('rabbits')) || 0;
 var sheep = Number(localStorage.getItem('sheep')) || 0;
 var petrolMowers = Number(localStorage.getItem('petrolMowers')) || 0;
+// get sounds and images for use in the game
 const clickAudio = new Audio('click.mp3');
+const achievementAudio = new Audio('notify.mp3');
+const errorAudio = new Audio('error.mp3');
 const img = document.getElementById('grass-img');
 var income = (rabbits * 1 * rabbitMultiplier) + 
                  (sheep * 5 * sheepMultiplier) + 
                  (petrolMowers * 50 * mowerMultiplier);
 var totalGrassTouched = Number(localStorage.getItem('totalGrassTouched')) || 0;
 // Update the display immediately on webpage load to reflect saved values
-document.getElementById('rabbitTxt').innerText = "Cost: " + rabbitCost;
-document.getElementById('sheepTxt').innerText = "Cost: " + sheepCost;
-document.getElementById('petrolMowerTxt').innerText = "Cost: " + petrolMowerCost;
-document.getElementById('shearsTxt').innerText = "Cost: " + shearsCost;
-document.getElementById('scytheTxt').innerText = "Cost: " + scytheCost;
-document.getElementById('pushMowerTxt').innerText = "Cost: " + pushMowerCost;
-document.getElementById('counter').innerText = "Grass Touched: " + grassTouched;
-document.getElementById('per-click').innerText = "Per Click: " + clickPower;
-document.getElementById('per-second').innerText = "Per Second: " + income;
+document.getElementById('rabbitTxt').innerText = "Cost: " + formatNumber(rabbitCost);
+document.getElementById('sheepTxt').innerText = "Cost: " + formatNumber(sheepCost);
+document.getElementById('petrolMowerTxt').innerText = "Cost: " + formatNumber(petrolMowerCost);
+document.getElementById('rabbit-desc').innerText = "(+" + formatNumber(rabbits * 1 * rabbitMultiplier) + " per second)";
+document.getElementById('sheep-desc').innerText = "(+" + formatNumber(sheep * 5 * sheepMultiplier) + " per second)";
+document.getElementById('petrolMower-desc').innerText = "(+" + formatNumber(petrolMowers * 50 * mowerMultiplier) + " per second)";
+document.getElementById('shearsTxt').innerText = "Cost: " + formatNumber(shearsCost);
+document.getElementById('scytheTxt').innerText = "Cost: " + formatNumber(scytheCost);
+document.getElementById('pushMowerTxt').innerText = "Cost: " + formatNumber(pushMowerCost);
+document.getElementById('counter').innerText = "Grass Touched: " + formatNumber(grassTouched);
+document.getElementById("total-grass").innerText = "Total Grass Touched: " + formatNumber(totalGrassTouched);
+document.getElementById('per-click').innerText = "Per Click: " + formatNumber(clickPower);
+document.getElementById('per-second').innerText = "Per Second: " + formatNumber(income);
 
     // Add this helper function to handle mathematical updates dynamically
 function recalculatePassiveIncome() {
@@ -60,7 +67,7 @@ function recalculatePassiveIncome() {
              
     // This makes sure the score display text is perfectly updated
     if (document.getElementById('per-second')) {
-        document.getElementById('per-second').innerText = "Per Second: " + income;
+        document.getElementById('per-second').innerText = "Per Second: " + formatNumber(income);
     }
 }
     function touch() {
@@ -92,42 +99,50 @@ function recalculatePassiveIncome() {
         function checkAchievements() {
     if (grassTouched >= 67 && !ach67) {
         showAchievement("Is this meme dead yet?", "SIXXXX SEVENNNNNNN");
+        achievementAudio.play();
         ach67 = true;
         localStorage.setItem('ach67', 'true');
     }
     if (grassTouched >= 100 && !ach100) {
         showAchievement("A lasting decision?", "You touched grass 100 times");
+        achievementAudio.play();
         ach100 = true;
         localStorage.setItem('ach100', 'true');
     }
     if (grassTouched >= 1000 && !ach1o000) {
         showAchievement("Green Thumb Maniac", "Rumour has it that grass was invented by fortnite");
+        achievementAudio.play();
         ach1o000 = true;
         localStorage.setItem('ach1o000', 'true');
     }
     if (grassTouched >= 10000 && !ach10o000) {
         showAchievement("Committed", "You touched grass 10,000 times!");
+        achievementAudio.play();
         ach10o000 = true;
         localStorage.setItem('ach10o000', 'true');
     }
     if (grassTouched >= 100000 && !ach100o000) {
         showAchievement("Outdoors Master", "You touched grass 100,000 times");
+        achievementAudio.play();
         ach100o000 = true; // Fixed typo here (was ach100000)
         localStorage.setItem('ach100o000', 'true');
     }
     if (grassTouched >= 1000000 && !ach1o000o000) {
         showAchievement("Millionaire", "You touched grass 1,000,000 times");
+        achievementAudio.play();
         ach1o000o000 = true;
         localStorage.setItem('ach1o000o000', 'true');
     }
     if (grassTouched >= 1000000000 && !ach1o000o000o000) {
         showAchievement("Billionaire", "You touched grass 1,000,000,000 times!");
+        achievementAudio.play();
         ach1o000o000o000 = true;
         localStorage.setItem('ach1o000o000o000', 'true');
     }
     // 1 Trillion
 if (grassTouched >= 1000000000000 && !ach1Tril) {
     showAchievement("The Chosen One (of Suburbia)", "You have physically contacted more blades of grass than exist on three Earths. Local lawnmower manufacturers have started hanging your picture in their breakrooms.");
+    achievementAudio.play();
     ach1Tril = true;
     localStorage.setItem('ach1Tril', 'true');
 }
@@ -135,6 +150,7 @@ if (grassTouched >= 1000000000000 && !ach1Tril) {
 // 100 Trillion
 if (grassTouched >= 100000000000000 && !ach100Tril) {
     showAchievement("Chlorophyll Connoisseur", "Your skin is starting to synthesize sunlight. You haven't blinked in four days because you're afraid a stray shadow might lower your click efficiency.");
+    achievementAudio.play();
     ach100Tril = true;
     localStorage.setItem('ach100Tril', 'true');
 }
@@ -142,6 +158,7 @@ if (grassTouched >= 100000000000000 && !ach100Tril) {
 // 1 Quadrillion
 if (grassTouched >= 1000000000000000 && !ach1Quad) {
     showAchievement("The Discord Moderator's Nightmare", "An amount of grass touchings so profoundly immense, the fabric of the internet is beginning to tear. Somewhere, an MMO server just crashed from sheer panic.");
+    achievementAudio.play();
     ach1Quad = true;
     localStorage.setItem('ach1Quad', 'true');
 }
@@ -149,6 +166,7 @@ if (grassTouched >= 1000000000000000 && !ach1Quad) {
 // 100 Quadrillion
 if (grassTouched >= 100000000000000000 && !ach100Quad) {
     showAchievement("Global Warming Speedrun Any%", "The sheer heat generated by your rapid clicking has altered local weather patterns. You are now legally classified as a natural disaster by the Department of Agriculture.");
+    achievementAudio.play();
     ach100Quad = true;
     localStorage.setItem('ach100Quad', 'true');
 }
@@ -156,6 +174,7 @@ if (grassTouched >= 100000000000000000 && !ach100Quad) {
 // 1 Quintillion
 if (grassTouched >= 1000000000000000000 && !ach1Quint) {
     showAchievement("Macroscopic Overdose", "You tried explaining this game to your doctor, and they immediately upgraded their malpractice insurance. Your keyboard is literally smoking.");
+    achievementAudio.play();
     ach1Quint = true;
     localStorage.setItem('ach1Quint', 'true');
 }
@@ -163,6 +182,7 @@ if (grassTouched >= 1000000000000000000 && !ach1Quint) {
 // 1 Sextillion
 if (grassTouched >= 1e+21 && !ach1Sext) { // Using scientific notation makes writing long zeros safer!
     showAchievement("Lawn Order: Special Clicking Unit", "You have transcended humanity. You don't just touch the grass anymore; you hold diplomatic summits with the mycelium network beneath the soil.");
+    achievementAudio.play();
     ach1Sext = true;
     localStorage.setItem('ach1Sext', 'true');
 }
@@ -170,6 +190,7 @@ if (grassTouched >= 1e+21 && !ach1Sext) { // Using scientific notation makes wri
 // 1 Septillion
 if (grassTouched >= 1e+24 && !ach1Sept) {
     showAchievement("Galactic Landscaping Corporation", "NASA has confirmed a localized green nebula expanding from your IP address. Aliens are observing your clicks with a mixture of awe and profound pity.");
+    achievementAudio.play();
     ach1Sept = true;
     localStorage.setItem('ach1Sept', 'true');
 }
@@ -177,6 +198,7 @@ if (grassTouched >= 1e+24 && !ach1Sept) {
 // 1 Octillion
 if (grassTouched >= 1e+27 && !ach1Oct) {
     showAchievement("Error 404: Outside Not Found", "The universe tried to render an actual real-world park for you, but your save file is so dense with numerical values that the reality engine gave up and spawned a glitching lawn chair.");
+    achievementAudio.play();
     ach1Oct = true;
     localStorage.setItem('ach1Oct', 'true');
 }
@@ -184,6 +206,7 @@ if (grassTouched >= 1e+27 && !ach1Oct) {
 // 1 Nonillion
 if (grassTouched >= 1e+30 && !ach1Non) {
     showAchievement("Cosmic Sod-Father", "Time and space bow before your botanical tyranny. Black holes collapse into beautifully manicured putting greens. The cursor is your sceptre; the universe is your yard.");
+    achievementAudio.play();        
     ach1Non = true;
     localStorage.setItem('ach1Non', 'true');
 }
@@ -191,6 +214,7 @@ if (grassTouched >= 1e+30 && !ach1Non) {
 // 1 Decillion
 if (grassTouched >= 1e+33 && !ach1Dec) {
     showAchievement("Go Inside.", "You did it. You touched the theoretical limit of grass. There is nothing left but atoms and automated rabbits. Please, close the browser window. Your family misses you.");
+    achievementAudio.play();
     ach1Dec = true;
     localStorage.setItem('ach1Dec', 'true');
 }
@@ -201,7 +225,7 @@ function buyShears() {
         shearsCost += clickPower;
         localStorage.setItem('shearsCost', shearsCost)
         const shearsText = document.getElementById('shearsTxt');
-        shearsText.innerText = `Cost: ${shearsCost}`
+        shearsText.innerText = `Cost: ` + formatNumber(shearsCost);
         }
     if (grassTouched >= shearsCost) {
         grassTouched -= shearsCost; // Spend the grass
@@ -209,13 +233,14 @@ function buyShears() {
         localStorage.setItem("clickingPower", clickPower)
         
         // Update display
-        document.getElementById('counter').innerText = "Grass Touched: " + grassTouched;
+        document.getElementById('counter').innerText = "Grass Touched: " + formatNumber(grassTouched);
         showAchievement("Bought Garden Shears", "You'll now get 1 more grass per touch");
         clickAudio.play(); 
-        document.getElementById('per-click').innerText = "Per Click: " + clickPower;
-        document.getElementById('per-second').innerText = "Per Second: " + income;  
+        document.getElementById('per-click').innerText = "Per Click: " + formatNumber(clickPower);
+        document.getElementById('per-second').innerText = "Per Second: " + formatNumber(income);  
     } else {
-        showAchievement("Not enough grass!", "Touch some more blud");
+        showError("Not enough grass!", "Touch some more blud");
+        errorAudio.play();
     }
 }
 function buyScythe() {
@@ -224,7 +249,7 @@ function buyScythe() {
         scytheCost += clickPower;
         localStorage.setItem('scytheCost', scytheCost)
         const scytheText = document.getElementById('scytheTxt');
-        scytheText.innerText = `Cost: ${scytheCost}`
+        scytheText.innerText = `Cost: ` + formatNumber(scytheCost);
         }
     if (grassTouched >= scytheCost) {
         grassTouched -= scytheCost; // Spend the grass
@@ -232,13 +257,14 @@ function buyScythe() {
         localStorage.setItem("clickingPower", clickPower)
         
         // Update display
-        document.getElementById('counter').innerText = "Grass Touched: " + grassTouched;
+        document.getElementById('counter').innerText = "Grass Touched: " + formatNumber(grassTouched);
         showAchievement("Bought Scythe", "You'll now get 5 more grass per touch");
         clickAudio.play(); 
-        document.getElementById('per-click').innerText = "Per Click: " + clickPower;
-        document.getElementById('per-second').innerText = "Per Second: " + income;
+        document.getElementById('per-click').innerText = "Per Click: " + formatNumber(clickPower);
+        document.getElementById('per-second').innerText = "Per Second: " + formatNumber(income);
     } else {
-        showAchievement("Not enough grass!", "Touch some more blud");
+        showError("Not enough grass!", "Touch some more blud");
+        errorAudio.play();
     }
 }
 function buyPushmower() {
@@ -246,7 +272,7 @@ function buyPushmower() {
         pushMowerCost += clickPower;
         localStorage.setItem('pushMowerCost', pushMowerCost)
         const pushMowerText = document.getElementById('pushMowerTxt');
-        pushMowerText.innerText = `Cost: ${pushMowerCost}`
+        pushMowerText.innerText = `Cost: ` + formatNumber(pushMowerCost)
         }
     if (grassTouched >= pushMowerCost) {
         grassTouched -= pushMowerCost; // Spend the grass
@@ -257,10 +283,11 @@ function buyPushmower() {
         document.getElementById('counter').innerText = "Grass Touched: " + formatNumber(grassTouched);
         document.getElementById('per-click').innerText = "Per Click: " + formatNumber(clickPower);
         document.getElementById('per-second').innerText = "Per Second: " + formatNumber(income);
-        showAchievement("Bought Push Mower", "You'll now get 50 more grass per touch");
+        showAchievement("Bought Push Mower", "You'll now get 10 more grass per touch");
         clickAudio.play(); 
     } else {
-        showAchievement("Not enough grass!", "Touch some more blud");
+        showError("Not enough grass!", "Touch some more blud");
+        errorAudio.play();
     }
 }
 function buyRabbit() {
@@ -268,29 +295,30 @@ function buyRabbit() {
         showAchievement("Rodent Receptionist", `You bought a rabbit! It touches ${1 * rabbitMultiplier} grass per second.`)
     }
     else if (grassTouched >= rabbitCost && rabbitMultiplier == 0) {
-        showAchievement("Don't pull the wool over my eyes", "You bought a rabbit! It touches 1 grass per second.")
+        showAchievement("Hired Help", "You bought a rabbit! It touches 1 grass per second.")
     }
     if(grassTouched >= rabbitCost && rabbits > 3) {
-        rabbitCost += rabbits * 5;
+        rabbitCost += (rabbits * 5 * rabbitMultiplier);
         recalculatePassiveIncome();
 
         //log the new phase 
         console.log("increased rabbit cost due to having more than 3 rabbits")
         //log the new cost and rabbit count       
-        console.log(`New rabbit cost: ${rabbitCost}, Rabbits owned: ${rabbits}`);
+        console.log(`New rabbit cost: ${rabbitCost}, Rabbits owned: ${formatNumber(rabbits)}`);
         //save to memory to prevent cost reset on refresh
         localStorage.setItem('rabbitCost', rabbitCost)
         localStorage.setItem('income', income)
-        //update the cost text
+        //update text
+        document.getElementById('per-second').innerText = "Per Second: " + formatNumber(income);
         const rabbitText = document.getElementById('rabbitTxt');
-        rabbitText.innerText = `Cost: ${rabbitCost}`
+        rabbitText.innerText = `Cost: ` + formatNumber(rabbitCost);
         }
     if(grassTouched >= rabbitCost && rabbits > 50) {
         rabbitCost += rabbits * 50;
         localStorage.setItem('rabbitCost', rabbitCost)
         localStorage.setItem('income', income)
         const rabbitText = document.getElementById('rabbitTxt');
-        rabbitText.innerText = `Cost: ${rabbitCost}`
+        rabbitText.innerText = `Cost: ` + formatNumber(rabbitCost)
         }
     if (grassTouched >= rabbitCost) {
         grassTouched -= rabbitCost;
@@ -299,28 +327,31 @@ function buyRabbit() {
         localStorage.setItem("rabbits", rabbits);
         
         // Update display
+        showAchievement("Bunny Business", `You bought a rabbit! It touches ${formatNumber(1 * rabbitMultiplier)} grass per second.`);
+        document.getElementById('rabbit-desc').innerText = "(+" + formatNumber(rabbits * rabbitMultiplier) + " per second)";
         document.getElementById('counter').innerText = "Grass Touched: " + formatNumber(grassTouched);
         clickAudio.play(); 
         document.getElementById("per-second").innerText = "Per Second: " + formatNumber(income);
         document.getElementById('per-click').innerText = "Per Click: " + formatNumber(clickPower);
     } else {
-                showAchievement("Not enough grass!", "Touch some more blud");
+                showError("Not enough grass!", "Touch some more blud");
+        errorAudio.play();
     }
 }
 function buySheep() {
-    if(grassTouched >= sheepCost && sheep > 3) {
-        sheepCost += sheep * 5;
+    if(grassTouched >= sheepCost && sheep > 5) {
+        sheepCost += sheep * 5 * sheepMultiplier;
         recalculatePassiveIncome();
         localStorage.setItem('income', income)
         //log the new phase 
-        console.log("increased sheep cost due to having more than 3 sheep")
+        console.log("increased sheep cost due to having more than 5 sheep")
         //log the new cost and sheep count       
-        console.log(`New sheep cost: ${sheepCost}, Sheep owned: ${sheep}`);
+        console.log(`New sheep cost: ${sheepCost}, Sheep owned: ${formatNumber(sheep)}`);
         //save to memory to prevent cost reset on refresh
         localStorage.setItem('sheepCost', sheepCost)
         //update the cost text
         const sheepText = document.getElementById('sheepTxt');
-        sheepText.innerText = `Cost: ${sheepCost}`
+        sheepText.innerText = `Cost: ` + formatNumber(sheepCost);
         }
     if (grassTouched >= sheepCost) {
         grassTouched -= sheepCost;
@@ -330,50 +361,55 @@ function buySheep() {
         localStorage.setItem("sheep", sheep);
         
         // Update display
+        document.getElementById('sheep-desc').innerText = "(+" + formatNumber(5 * sheepMultiplier) + " per second)";
         document.getElementById('counter').innerText = "Grass Touched: " + formatNumber(grassTouched);
         clickAudio.play(); 
         document.getElementById("per-second").innerText = "Per Second: " + formatNumber(income);
         document.getElementById('per-click').innerText = "Per Click: " + formatNumber(clickPower);
     } 
     if (grassTouched >= sheepCost && sheepMultiplier > 0) {
-        showAchievement("Don't pull the wool over my eyes", `You bought a sheep! It touches ${5 * mowerMultiplier} grass per second.`)
+        showAchievement("Don't pull the wool over my eyes", `You bought a sheep! It touches 5 grass per second.`)
     }
     else if (grassTouched >= sheepCost && sheepMultiplier == 0) {
         showAchievement("Don't pull the wool over my eyes", "You bought a sheep! It touches 5 grass per second.")
     }
     else {
-                showAchievement("Not enough grass!", "Touch some more blud");
+                showError("Not enough grass!", "Touch some more blud");
+        errorAudio.play();
     }
 }
 function buyPetrolMower() {
-    if(grassTouched >= petrolMowerCost && petrolMowers > 3) {
+    if(grassTouched >= petrolMowerCost && petrolMowers > 10) {
         petrolMowerCost += petrolMowers * 50;
         recalculatePassiveIncome();
         localStorage.setItem('income', income)
         //log the new phase 
-        console.log("increased petrol mower cost due to having more than 3 petrol mowers")
+        console.log("increased petrol mower cost due to having more than 10 petrol mowers")
         //log the new cost and petrol mower count       
-        console.log(`New petrol mower cost: ${petrolMowerCost}, Petrol mowers owned: ${petrolMowers}`);
+        console.log(`New petrol mower cost: ${petrolMowerCost}, Petrol mowers owned: ${formatNumber(petrolMowers)}`);
         //save to memory to prevent cost reset on refresh
         localStorage.setItem('petrolMowerCost', petrolMowerCost)
         //update the cost text
         const petrolMowerText = document.getElementById('petrolMowerTxt');
-        petrolMowerText.innerText = `Cost: ${petrolMowerCost}`
+        petrolMowerText.innerText = `Cost: ` + formatNumber(petrolMowerCost);
         }
     if (grassTouched >= petrolMowerCost) {
         grassTouched -= petrolMowerCost;
         petrolMowers++; 
+        document.getElementById('petrolMower-desc').innerText = "(+" + formatNumber(petrolMowers * 50 * mowerMultiplier) + " per second)";
         localStorage.setItem("petrolMowers", petrolMowers);
-        document.getElementById('counter').innerText = "Grass Touched: " + grassTouched;
-        showAchievement("You automated the one thing that shouldn't be automated", `You bought a petrol mower! It touches ${50 * mowerMultiplier} grass per second.`);
+        document.getElementById('counter').innerText = "Grass Touched: " + formatNumber(grassTouched);
+        showAchievement("You automated the one thing that shouldn't be automated", `You bought a petrol mower! It touches ${formatNumber(50 * mowerMultiplier)} grass per second.`);
         clickAudio.play(); 
-        document.getElementById("per-second").innerText = "Per Second: " + income;
-        document.getElementById('per-click').innerText = "Per Click: " + clickPower;
+        document.getElementById("per-second").innerText = "Per Second: " + formatNumber(income);
+        document.getElementById('per-click').innerText = "Per Click: " + formatNumber(clickPower);
     } else {
-                showAchievement("Not enough grass!", "Touch some more blud");
+                showError("Not enough grass!", "Touch some more blud");
+        errorAudio.play();
     }
 }
-            
+//toast notifications      
+//achievmements      
 function showAchievement(title, desc) {
     const popup = document.getElementById('achievement-popup');
     const titleEl = document.getElementById('achievement-title');
@@ -391,6 +427,25 @@ function showAchievement(title, desc) {
         popup.classList.remove('show');
     }, 4000);
 }
+//errors
+function showError(title, desc) {
+    const popup = document.getElementById('error-popup');
+    const titleEl = document.getElementById('error-title');
+    const descEl = document.getElementById('error-desc');
+
+    // Set the text
+    titleEl.innerText = title;
+    descEl.innerText = desc;
+
+    // Slide it in
+    popup.classList.add('show');
+
+    // Slide it back out after 4 seconds
+    setTimeout(() => {
+        popup.classList.remove('show');
+    }, 3000);
+}
+
 //commands
     window.setGrass = function(newGrass) {
     grassTouched = parseInt(newGrass);
@@ -471,7 +526,8 @@ function buyUpgrade(type, baseCost, multiplierValue) {
         showAchievement("Research Success!", "Upgraded " + type + " speed by " + multiplierValue + "x!");
         document.getElementById('per-second').innerText = "Per Second: " + income;
     } else {
-        alert("Insufficient resources! Keep touching grass to fund operations.");
+        showError("Insufficient resources!", "Keep touching grass to fund operations.");
+        errorAudio.play();
     }
 }
 
@@ -488,7 +544,7 @@ function updateUpgradeUI() {
         var nameEl = document.getElementById('up-' + type + '-name');
         
         if (costEl && nameEl) {
-            costEl.innerText = "Cost: " + cost + " Grass";
+            costEl.innerText = "Cost: " + formatNumber(cost) + " Grass";
             nameEl.innerText = type.charAt(0).toUpperCase() + type.slice(1) + " Upgrade (Lvl " + lvl + ")";
         }
     });

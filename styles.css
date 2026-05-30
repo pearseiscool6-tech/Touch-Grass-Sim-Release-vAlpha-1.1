@@ -81,6 +81,38 @@ body {
     margin: 0;
     font-size: 0.9em;
 }
+
+#error-popup {
+    position: fixed;
+    top: 80px;
+    right: -300px; /* Start off-screen to the right */
+    width: 250px;
+    background-color: #f44336; /* Red for error */
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transition: right 0.5s ease-in-out;
+    z-index: 1000; /* Ensures it stays on top of everything */
+    font-family: sans-serif;
+    border-left: 5px solid #d84325;
+}
+
+/* This class will be added/removed by JS to animate the popup */
+#error-popup.show {
+    right: 20px;
+}
+
+#error-title {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+#error-desc {
+    margin: 0;
+    font-size: 0.9em;
+}
 /* Container to hold both game and shop */
 .game-wrapper {
     display: flex;
